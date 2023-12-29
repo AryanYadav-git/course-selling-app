@@ -72,7 +72,7 @@ app.post('/admin/login', async (req, res) => {
     const { username, password } = req.headers;
     const admin = await Admin.findOne({ username, password });
     if (admin) {
-      const token = jwt.sign({ username, role: 'admin' }, SECRET, { expiresIn: '1h' });
+      const token = jwt.sign({ username, role: 'admin' }, secretKey, { expiresIn: '1h' });
       res.json({ message: 'Logged in successfully', token });
     } else {
       res.status(403).json({ message: 'Invalid username or password' });
@@ -108,7 +108,7 @@ app.post('/admin/login', async (req, res) => {
     } else {
       const newUser = new User({ username, password });
       await newUser.save();
-      const token = jwt.sign({ username, role: 'user' }, SECRET, { expiresIn: '1h' });
+      const token = jwt.sign({ username, role: 'user' }, secretKey, { expiresIn: '1h' });
       res.json({ message: 'User created successfully', token });
     }
   });
@@ -117,7 +117,7 @@ app.post('/admin/login', async (req, res) => {
     const { username, password } = req.headers;
     const user = await User.findOne({ username, password });
     if (user) {
-      const token = jwt.sign({ username, role: 'user' }, SECRET, { expiresIn: '1h' });
+      const token = jwt.sign({ username, role: 'user' }, secretKey, { expiresIn: '1h' });
       res.json({ message: 'Logged in successfully', token });
     } else {
       res.status(403).json({ message: 'Invalid username or password' });
